@@ -24,6 +24,8 @@
 
         <TextView
             android:id="@+id/source_name"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="8"
             android:textSize="24sp"
             android:textStyle="bold"

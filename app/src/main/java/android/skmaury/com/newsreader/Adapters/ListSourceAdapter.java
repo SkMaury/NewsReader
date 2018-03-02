@@ -1,7 +1,9 @@
 package android.skmaury.com.newsreader.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.skmaury.com.newsreader.Interface.ItemClickListener;
+import android.skmaury.com.newsreader.ListNewsActivity;
 import android.skmaury.com.newsreader.Model.WebSite;
 import android.skmaury.com.newsreader.R;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,7 @@ class ListSourceViewHolder extends RecyclerView.ViewHolder implements View.OnCli
         super(itemView);
         source_image = itemView.findViewById(R.id.source_image);
         source_title = itemView.findViewById(R.id.source_name);
+        itemView.setOnClickListener(this);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -61,7 +64,10 @@ public class ListSourceAdapter extends RecyclerView.Adapter<ListSourceViewHolder
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-
+                Intent intent = new Intent(context, ListNewsActivity.class);
+                intent.putExtra("source", webSite.getSources().get(position).getId());
+                intent.putExtra("sortBy", webSite.getSources().get(position).getSortBysAvailable().get(0));
+                context.startActivity(intent);
             }
         });
     }
