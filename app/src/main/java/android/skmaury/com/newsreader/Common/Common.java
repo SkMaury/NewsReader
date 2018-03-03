@@ -15,4 +15,12 @@ public class Common {
     public static NewsService getNewsService(){
         return RetrofitClient.getClient(BASE_URL).create(NewsService.class);
     }
+
+    public static String getAPIUrl(String source, String sortBy, String apiKey){
+        StringBuilder apiUrl = new StringBuilder("https://newsapi.org/v2/top-headlines?sources=");
+        return apiUrl.append(source)
+                .append("&apiKey=")
+                .append(API_KEY)
+                .toString();
+    }
 }
