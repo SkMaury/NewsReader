@@ -1,6 +1,6 @@
 package android.skmaury.com.newsreader;
 
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
@@ -12,7 +12,7 @@ import dmax.dialog.SpotsDialog;
 public class DetailActivity extends AppCompatActivity {
 
     WebView webView;
-    SpotsDialog dialog;
+    AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

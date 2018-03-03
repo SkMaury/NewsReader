@@ -54,7 +54,7 @@ public class ListNewsActivity extends AppCompatActivity {
         dialog = new SpotsDialog(this);
 
         //View
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,7 +62,7 @@ public class ListNewsActivity extends AppCompatActivity {
             }
         });
 
-        diagonalLayout = (DiagonalLayout)findViewById(R.id.diagonalLayout);
+        diagonalLayout = findViewById(R.id.diagonalLayout);
         diagonalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,11 +71,11 @@ public class ListNewsActivity extends AppCompatActivity {
                 startActivity(detail);
             }
         });
-        kbv = (KenBurnsView)findViewById(R.id.top_image);
-        top_author = (TextView)findViewById(R.id.top_author);
-        top_title = (TextView)findViewById(R.id.top_title);
+        kbv = findViewById(R.id.top_image);
+        top_author = findViewById(R.id.top_author);
+        top_title = findViewById(R.id.top_title);
 
-        lstNews = (RecyclerView)findViewById(R.id.lstNews);
+        lstNews = findViewById(R.id.lstNews);
         lstNews.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         lstNews.setLayoutManager(layoutManager);
