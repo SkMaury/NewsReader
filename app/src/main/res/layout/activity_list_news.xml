@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/swipeRefresh"
     tools:context="android.skmaury.com.newsreader.ListNewsActivity">
 
     <RelativeLayout
@@ -11,7 +12,7 @@
         android:layout_height="match_parent">
 
         <com.github.florent37.diagonallayout.DiagonalLayout
-            android:id="@+id/diagonal_layout"
+            android:id="@+id/diagonalLayout"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             app:diagonal_angle="5"
@@ -62,10 +63,12 @@
         </com.github.florent37.diagonallayout.DiagonalLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:layout_below="@id/diagonal_layout"
+            android:layout_below="@id/diagonalLayout"
             android:id="@+id/lstNews"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>
 

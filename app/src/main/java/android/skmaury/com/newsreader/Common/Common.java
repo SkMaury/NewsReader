@@ -19,6 +19,8 @@ public class Common {
     public static String getAPIUrl(String source, String sortBy, String apiKey){
         StringBuilder apiUrl = new StringBuilder("https://newsapi.org/v2/top-headlines?sources=");
         return apiUrl.append(source)
+                .append("&sortBy=")
+                .append(sortBy)
                 .append("&apiKey=")
                 .append(API_KEY)
                 .toString();

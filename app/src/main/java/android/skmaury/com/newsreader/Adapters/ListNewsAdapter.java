@@ -80,12 +80,14 @@ public class ListNewsAdapter extends RecyclerView.Adapter<ListNewsViewHolder>{
             holder.article_title.setText(articleList.get(position).getTitle());
 
         Date date = null;
-        try{
-            date = ISO8601Parse.parse(articleList.get(position).getPublishedAt());
-        }catch (ParseException e){
-            e.printStackTrace();
+        if(articleList.get(position).getPublishedAt() != null) {
+            try {
+                date = ISO8601Parse.parse(articleList.get(position).getPublishedAt());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            holder.article_time.setReferenceTime(date.getTime());
         }
-        holder.article_time.setReferenceTime(date.getTime());
 
         /* Set Event Click */
         holder.setItemClickListener(new ItemClickListener() {

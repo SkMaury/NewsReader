@@ -1,5 +1,6 @@
 package android.skmaury.com.newsreader;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.skmaury.com.newsreader.Adapters.ListNewsAdapter;
 import android.skmaury.com.newsreader.Common.Common;
@@ -27,82 +28,98 @@ import retrofit2.Response;
 
 public class ListNewsActivity extends AppCompatActivity {
 
+
     KenBurnsView kbv;
-    SpotsDialog dialog;
+    DiagonalLayout diagonalLayout;
+    AlertDialog dialog;
     NewsService mService;
-    TextView top_author, top_title;
+    TextView top_author,top_title;
     SwipeRefreshLayout swipeRefreshLayout;
 
-    String source = "", sortBy = "", webHotUrl = "";
+    String source="",sortBy="",webHotURL="";
 
     ListNewsAdapter adapter;
     RecyclerView lstNews;
     RecyclerView.LayoutManager layoutManager;
-    DiagonalLayout diagonalLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_news);
 
+        //Service
         mService = Common.getNewsService();
+
         dialog = new SpotsDialog(this);
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+
+        //View
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadNews(source, true);
+                loadNews(source,true);
             }
         });
-        diagonalLayout = findViewById(R.id.diagonal_layout);
+
+        diagonalLayout = (DiagonalLayout)findViewById(R.id.diagonalLayout);
         diagonalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                /* This click listener allows user to fetch latest news to the user */
-                Intent detail = new Intent(getBaseContext(), DetailActivity.class);
-                detail.putExtra("webURL", webHotUrl);
+            public void onClick(View view) {
+                Intent detail = new Intent(getBaseContext(),DetailActivity.class);
+                detail.putExtra("webURL",webHotURL);
                 startActivity(detail);
             }
         });
-        kbv = findViewById(R.id.top_image);
-        top_author = findViewById(R.id.top_author);
-        top_title = findViewById(R.id.top_title);
+        kbv = (KenBurnsView)findViewById(R.id.top_image);
+        top_author = (TextView)findViewById(R.id.top_author);
+        top_title = (TextView)findViewById(R.id.top_title);
 
-        lstNews = findViewById(R.id.lstNews);
+        lstNews = (RecyclerView)findViewById(R.id.lstNews);
         lstNews.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         lstNews.setLayoutManager(layoutManager);
 
-        if(getIntent() != null){
+        //Intent
+        if(getIntent() != null)
+        {
             source = getIntent().getStringExtra("source");
             sortBy = getIntent().getStringExtra("sortBy");
             if(!source.isEmpty() && !sortBy.isEmpty())
-                loadNews(source, false);
+            {
+                loadNews(source,false);
+            }
         }
     }
 
     private void loadNews(String source, boolean isRefreshed) {
-        if(!isRefreshed){
+        if(!isRefreshed)
+        {
             dialog.show();
-            mService.getNewestArticles(Common.getAPIUrl(source, sortBy, Common.API_KEY))
+            mService.getNewestArticles(Common.getAPIUrl(source,sortBy,Common.API_KEY))
                     .enqueue(new Callback<News>() {
                         @Override
                         public void onResponse(Call<News> call, Response<News> response) {
                             dialog.dismiss();
+                            //Get first article
                             Picasso.with(getBaseContext())
                                     .load(response.body().getArticles().get(0).getUrlToImage())
                                     .into(kbv);
+
                             top_title.setText(response.body().getArticles().get(0).getTitle());
                             top_author.setText(response.body().getArticles().get(0).getAuthor());
 
-                            webHotUrl = response.body().getArticles().get(0).getUrl();
+                            webHotURL = response.body().getArticles().get(0).getUrl();
 
-                            /* Loading remaining articles */
-                            List<Article> removeFirstItem = response.body().getArticles();
-                            removeFirstItem.remove(0);
-                            adapter = new ListNewsAdapter(removeFirstItem, getBaseContext());
+                            //Load remain articles
+                            List<Article> removeFristItem = response.body().getArticles();
+                            //Because we already load first item to show on Diagonal Layout
+                            //So we need remove it
+                            removeFristItem.remove(0);
+                            adapter = new ListNewsAdapter(removeFristItem,getBaseContext());
                             adapter.notifyDataSetChanged();
                             lstNews.setAdapter(adapter);
+
                         }
 
                         @Override
@@ -111,27 +128,33 @@ public class ListNewsActivity extends AppCompatActivity {
                         }
                     });
         }
-        else{
+        else
+        {
             dialog.show();
-            mService.getNewestArticles(Common.getAPIUrl(source, sortBy, Common.API_KEY))
+            mService.getNewestArticles(Common.getAPIUrl(source,sortBy,Common.API_KEY))
                     .enqueue(new Callback<News>() {
                         @Override
                         public void onResponse(Call<News> call, Response<News> response) {
                             dialog.dismiss();
+                            //Get first article
                             Picasso.with(getBaseContext())
                                     .load(response.body().getArticles().get(0).getUrlToImage())
                                     .into(kbv);
+
                             top_title.setText(response.body().getArticles().get(0).getTitle());
                             top_author.setText(response.body().getArticles().get(0).getAuthor());
 
-                            webHotUrl = response.body().getArticles().get(0).getUrl();
+                            webHotURL = response.body().getArticles().get(0).getUrl();
 
-                            /* Loading remaining articles */
-                            List<Article> removeFirstItem = response.body().getArticles();
-                            removeFirstItem.remove(0);
-                            adapter = new ListNewsAdapter(removeFirstItem, getBaseContext());
+                            //Load remain articles
+                            List<Article> removeFristItem = response.body().getArticles();
+                            //Because we already load first item to show on Diagonal Layout
+                            //So we need remove it
+                            removeFristItem.remove(0);
+                            adapter = new ListNewsAdapter(removeFristItem,getBaseContext());
                             adapter.notifyDataSetChanged();
                             lstNews.setAdapter(adapter);
+
                         }
 
                         @Override

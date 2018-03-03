@@ -1,5 +1,6 @@
 package android.skmaury.com.newsreader.Interface;
 
+import android.skmaury.com.newsreader.Common.Common;
 import android.skmaury.com.newsreader.Model.News;
 import android.skmaury.com.newsreader.Model.WebSite;
 
@@ -12,7 +13,7 @@ import retrofit2.http.Url;
  */
 
 public interface NewsService {
-    @GET("v1/sources?language=en")
+    @GET("v2/sources?language=en&apiKey=" + Common.API_KEY)
     Call<WebSite> getSource();
 
     @GET
