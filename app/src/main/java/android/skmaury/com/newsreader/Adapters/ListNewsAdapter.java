@@ -95,6 +95,7 @@ public class ListNewsAdapter extends RecyclerView.Adapter<ListNewsViewHolder>{
             public void onClick(View view, int position, boolean isLongClick) {
                 Intent detail = new Intent(context, DetailActivity.class);
                 detail.putExtra("webURL", articleList.get(position).getUrl());
+                detail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(detail);
             }
         });

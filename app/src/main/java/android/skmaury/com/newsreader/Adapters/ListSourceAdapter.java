@@ -68,6 +68,7 @@ public class ListSourceAdapter extends RecyclerView.Adapter<ListSourceViewHolder
                 intent.putExtra("source", webSite.getSources().get(position).getId());
                 /* Modified to remove null pointer exception error for List.get() */
                 intent.putExtra("sortBy", String.valueOf(webSite.getSources().get(position).getSortBysAvailable()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
